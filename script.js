@@ -3,14 +3,15 @@ require([
     "esri/Map",
     "esri/views/MapView",
     "esri/config",
-], function (Map, MapView, esriConfig) {
+    "esri/Basemap",
+    "esri/widgets/BasemapGallery",
 
     // Configure the ArcGIS API key
     esriConfig.apiKey = "AAPK83337061f79941cdbcba8ea16add7f1csWFIvmrzXU7TvesGSEbfGqhfxRivSP37KmfuCDfiec8kVrxhDCre40EzzsvFCLSB";
 
     // Create a map using Esri's topographic basemap
     const map = new Map({
-        basemap: "arcgis-navigation"
+        basemap: "arcgis-nova"
     });
 
     // Create a map view   
@@ -22,6 +23,22 @@ require([
         constraints: {
             snapToZoom: false
         }
+    });
+    // Create a BasemapGallery widget
+    let basemapGallery = new BasemapGallery({
+        view: view,
+        source: [
+            Basemap.fromId("arcgis-colored-pencil"),
+            Basemap.fromId("arcgis-human-geography-dark"),
+            Basemap.fromId("arcgis-midcentury"),
+            Basemap.fromId("arcgis-modern-antique"),
+            Basemap.fromId("arcgis-newspaper"),
+            Basemap.fromId("arcgis-nova"),
+        ]
+    });
+    //Add widget to the top right corner of the view
+    view.ui.add(basemapGallery, {
+        position: "top-right"
     });
 
     // Wait for the map view to load
