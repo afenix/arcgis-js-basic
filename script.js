@@ -3,7 +3,7 @@ require([
     "esri/Map",
     "esri/views/MapView",
     "esri/config",
-    "esri/Basemap",
+    "esri/widgets/Locate",
     "esri/widgets/BasemapGallery",
     "esri/widgets/Locate"
 ], function (Map, MapView, esriConfig, Basemap, BasemapGallery, Locate) {
@@ -43,6 +43,15 @@ require([
         updateBasemapStyle(event.target.value);
     });
 
+    // Add a locate button to the view
+    const locateBtn = new Locate({
+        view: view
+    });
+
+    // Add the locate widget to the top left corner of the view (under the zoom buttons)
+    view.ui.add(locateBtn, {
+        position: "top-left"
+    });
 
     // Wait for the map view to load
     view.when(function () {
