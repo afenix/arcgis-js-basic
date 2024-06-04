@@ -5,6 +5,8 @@ require([
     "esri/config",
     "esri/Basemap",
     "esri/widgets/BasemapGallery",
+    "esri/widgets/Locate"
+], function (Map, MapView, esriConfig, Basemap, BasemapGallery, Locate) {
 
     // Configure the ArcGIS API key
     esriConfig.apiKey = "AAPK83337061f79941cdbcba8ea16add7f1csWFIvmrzXU7TvesGSEbfGqhfxRivSP37KmfuCDfiec8kVrxhDCre40EzzsvFCLSB";
@@ -24,22 +26,23 @@ require([
             snapToZoom: false
         }
     });
-    // Create a BasemapGallery widget
-    let basemapGallery = new BasemapGallery({
-        view: view,
-        source: [
-            Basemap.fromId("arcgis-colored-pencil"),
-            Basemap.fromId("arcgis-human-geography-dark"),
-            Basemap.fromId("arcgis-midcentury"),
-            Basemap.fromId("arcgis-modern-antique"),
-            Basemap.fromId("arcgis-newspaper"),
-            Basemap.fromId("arcgis-nova"),
-        ]
+
+    //Add the basemapStyles div to the view UI.
+    const updateBasemapStyle = (basemapId) => {
+        view.map.basemap = basemapId;
+    };
+
+    // Get the basemap styles div and add to the top right corner of the view
+    const basemapStylesDiv = document.getElementById("basemapStyles");
+    view.ui.add(basemapStylesDiv, "top-right");
+
+    //Add an event listener to watch for changes on the combobox. When the combobox value has changed, 
+    //call the updateBasemapStyle function to update the basemap style.
+    const styleCombobox = document.getElementById("styleCombobox");
+    styleCombobox.addEventListener("calciteComboboxChange", (event) => {
+        updateBasemapStyle(event.target.value);
     });
-    //Add widget to the top right corner of the view
-    view.ui.add(basemapGallery, {
-        position: "top-right"
-    });
+
 
     // Wait for the map view to load
     view.when(function () {

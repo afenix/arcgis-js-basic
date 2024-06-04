@@ -32,3 +32,8 @@ body,
     height: 40px;
     margin: 0 8px 0 8px;
 }
+
+#basemapStyles {
+    width: 250px;
+    padding: 10px;
+}
