@@ -4,9 +4,8 @@ require([
     "esri/views/MapView",
     "esri/config",
     "esri/widgets/Locate",
-    "esri/widgets/BasemapGallery",
-    "esri/widgets/Locate"
-], function (Map, MapView, esriConfig, Basemap, BasemapGallery, Locate) {
+    "esri/widgets/Search"
+], function (Map, MapView, esriConfig, Locate, Search) {
 
     // Configure the ArcGIS API key
     esriConfig.apiKey = "AAPK83337061f79941cdbcba8ea16add7f1csWFIvmrzXU7TvesGSEbfGqhfxRivSP37KmfuCDfiec8kVrxhDCre40EzzsvFCLSB";
@@ -52,6 +51,18 @@ require([
     view.ui.add(locateBtn, {
         position: "top-left"
     });
+
+    // Add a search widget to the view
+    const searchWidget = new Search({
+        view: view
+    });
+
+    // Adds the search widget below other elements in the top left corner of the view
+    view.ui.add(searchWidget, {
+        position: "top-left",
+        index: 0
+    });
+
 
     // Wait for the map view to load
     view.when(function () {
